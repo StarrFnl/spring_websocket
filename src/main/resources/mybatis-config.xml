@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- <environments default="development"> <environment id="development"> 
+		<transactionManager type="JDBC" /> <dataSource type="POOLED"> <property name="driver" 
+		value="${driver}" /> <property name="url" value="${url}" /> <property name="username" 
+		value="${username}" /> <property name="password" value="${password}" /> </dataSource> 
+		</environment> </environments> -->
+	<!-- <mappers> <mapper resource="org/mybatis/example/BlogMapper.xml" /> 
+		</mappers> -->
+
+	<settings>
+		<!--  -->
+		<setting name="logImpl" value="LOG4J" />
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<typeAliases>
+		<!-- 타입을 사용 시 간단히 쓰려고 별명 설정 -->
+		<typeAlias type="com.shinhan.dto.testVO" alias="testvo" />
+		<typeAlias type="com.shinhan.dto.UserVO" alias="uservo" />
+		
+	</typeAliases>
+	
+
+
+</configuration>
