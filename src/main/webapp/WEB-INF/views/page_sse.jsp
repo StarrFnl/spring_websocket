@@ -14,15 +14,13 @@
 	<h1>${user1 }</h1>
 	<h1>${user2 }</h1>
 	
-	<a href="#" id="sse" title="sse">sse client</a>
+	<a href="#" id="chat" title="채팅">채팅</a>
 </body>
 <script>
-	const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/1');
-
-		eventSource.addEventListener('sse', event => {
-    	console.log(event);
-    	console.log(event.data);
-    	console.log(event.data.name);
-	});
+	document.querySelector("#chat").addEventListener('click', function(e){
+		e.preventDefault();
+		window.open("echo.do","chat","width=500, height=800, top=200, left=200");
+        // 경로, 파일, 너비, 높이, 위치 지정
+	})
 </script>
 </html>
