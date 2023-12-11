@@ -13,14 +13,22 @@
 	<h1>page</h1>
 	<h1>${user1 }</h1>
 	<h1>${user2 }</h1>
+	<h1>${user3 }</h1>
 	
 	<a href="#" id="sse" title="sse">sse client</a>
 </body>
 <script>
-	const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/1');
+	const eventSource_2 = new EventSource('http://${user3.user_content}:9090/app/notifications/subscribe/100');
+	/* const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/2');
 
-		eventSource.addEventListener('sse', event => {
+	eventSource.addEventListener('sse', event => {
     	console.log(event);
+    	console.log(event.data);
+    	console.log(event.data.name);
+	}); */
+		
+	eventSource_2.addEventListener('sse', event => {
+    	console.log(event, "eSource1, ${user3 }");
     	console.log(event.data);
     	console.log(event.data.name);
 	});

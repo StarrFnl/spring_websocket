@@ -16,6 +16,7 @@
 	<h3>${tested.test_content }</h3>
 </c:forEach>
 <button onclick="location.href='page.do'">페이지 가기</button>
+<button onclick="location.href='page_client.do'">클라이언트 페이지 가기</button>
 
 
 

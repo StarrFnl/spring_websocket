@@ -51,7 +51,16 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 	public String pageDisplay(Model model) {
 		model.addAttribute("user1",uDao.selectUserById(1));
 		model.addAttribute("user2",uDao.selectUserById(2));
+		model.addAttribute("user3",uDao.selectUserById(3));
 		return "page";
+	}
+	
+	@GetMapping("/page_client.do")
+	public String pageClient(Model model) {
+		model.addAttribute("user1",uDao.selectUserById(1));
+		model.addAttribute("user2",uDao.selectUserById(2));
+		model.addAttribute("user3",uDao.selectUserById(3));
+		return "page_sse";
 	}
 	
 	@RequestMapping(value = "/echo.do", method = RequestMethod.GET)

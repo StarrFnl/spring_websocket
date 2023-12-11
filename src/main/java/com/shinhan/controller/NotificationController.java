@@ -2,6 +2,7 @@ package com.shinhan.controller;
 
  
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.shinhan.model.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
+@CrossOrigin
 @Async  //필수
 @RestController
 @RequiredArgsConstructor
@@ -30,6 +32,7 @@ public class NotificationController {
 	 * ("text/plain") that is not "text/event-stream". aborting the connection. 오류가 발생할 수 있습니다.
 	 */
 	
+	//구독 연결만
     @GetMapping(value = "/subscribe/{id}", 
     		produces = "text/event-stream" )//MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribe(@PathVariable Long id, testVO test) {
@@ -38,9 +41,17 @@ public class NotificationController {
     	System.out.println(sseObj);
         return sseObj;
     }
-
+    
+    //연결된 곳에 공지 보내기
     @PostMapping("/send-data/{id}")
     public void sendData(@PathVariable Long id) {
+        notificationService.notify(id, "test");
+    }
+    
+    
+    //연결된 곳에 공지 보내기
+    @PostMapping("/my-send-data/{id}")
+    public void mysendData(@PathVariable Long id) {
         notificationService.notify(id, "test");
     }
 }

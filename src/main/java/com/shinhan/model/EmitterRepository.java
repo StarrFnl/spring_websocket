@@ -13,8 +13,7 @@ import lombok.RequiredArgsConstructor;
 public class EmitterRepository {
     // 모든 Emitters를 저장하는 ConcurrentHashMap
     private final Map<Long, SseEmitter> emitters = new ConcurrentHashMap<>();
-
-    /**
+        /**
      * 주어진 아이디와 이미터를 저장
      *
      * @param id      - 사용자 아이디.
@@ -42,4 +41,6 @@ public class EmitterRepository {
     public SseEmitter get(Long id) {
         return emitters.get(id);
     }
+
+
 }

@@ -24,7 +24,7 @@ public class NotificationService {
     public SseEmitter subscribe(Long userId) {
         SseEmitter emitter = createEmitter(userId);
 
-        sendToClient(userId, "EventStream Created. [userId=" + userId + "]");
+        sendToClient(userId, "EventStream Created, 주문 받을 수 있습니다. [userId=" + userId + "]");
         return emitter;
     }
 

@@ -13,14 +13,52 @@
 	<h1>page</h1>
 	<h1>${user1 }</h1>
 	<h1>${user2 }</h1>
+	<h1>${user3 }</h1>
+	<%-- <form method="post" action="http://${user1.user_content}:9090/app/notifications/subscribe/2">
+		<input type="text" name="content">
+		<input type="submit" id="send" value="send">
+	</form> --%>
+	<button id="send">보내기</button>
+	<script>
 	
-	<a href="#" id="chat" title="채팅">채팅</a>
+	/* const sendButton = document.getElementById('send');
+
+	sendButton.addEventListener('click', () => {
+	  fetch('http://172.27.192.1:9090/notifications/my-send-data/3', {
+	    method: 'POST',
+	    headers: {
+	      'Content-Type': 'application/json'
+	    },
+	    mode: 'cors', // CORS를 사용하여 요청 보내기
+	    body: JSON.stringify({ key: 'starrfnl' })
+	  })
+	    .then(response => console.log(response))
+	    .catch(error => {
+	      console.error('Error:', error);
+	    });
+	}); */
+	
+	const userId = 3;
+	const eventSource = new EventSource(`http://192.168.0.89:9090/notifications/sse-send-data/3`);
+
+	eventSource.onmessage = (event) => {
+	  // SSE 메시지 수신 시 처리
+	  const data = JSON.parse(event.data);
+	  console.log(data);
+	};
+
+	eventSource.onerror = (error) => {
+	  // SSE 에러 처리
+	  console.error('SSE Error:', error);
+	};
+
+	eventSource.onclose = () => {
+	  // SSE 연결 종료 처리
+	  console.log('SSE Connection Closed');
+	};
+
+	</script>
+	
+	
 </body>
-<script>
-	document.querySelector("#chat").addEventListener('click', function(e){
-		e.preventDefault();
-		window.open("echo.do","chat","width=500, height=800, top=200, left=200");
-        // 경로, 파일, 너비, 높이, 위치 지정
-	})
-</script>
 </html>
