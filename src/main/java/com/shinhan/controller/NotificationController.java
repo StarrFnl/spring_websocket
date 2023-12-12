@@ -17,7 +17,7 @@ import com.shinhan.model.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin
+//@CrossOrigin
 @Async  //필수
 @RestController
 @RequiredArgsConstructor

@@ -22,8 +22,9 @@
 	<script>
 	
 	const sendButton = document.getElementById('send');
-	const url = 'http://172.27.205.135:8088/app/notifications/send-data/100';
-	const data = { name: 'mynameis hyunhyun' };
+	var origin = "http://192.168.0.68:8080/app/";
+	const url = origin+'notifications/send-data/100';
+	const data = { name: 'mynameis kim' };
 	
 	/* const Http = new XMLHttpRequest();
 
