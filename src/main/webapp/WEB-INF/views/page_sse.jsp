@@ -21,25 +21,38 @@
 	<button id="send">보내기</button>
 	<script>
 	
-	/* const sendButton = document.getElementById('send');
+	const sendButton = document.getElementById('send');
+	const url = 'http://172.27.205.135:8088/app/notifications/send-data/100';
+	const data = { name: 'mynameis hyunhyun' };
+	
+	/* const Http = new XMLHttpRequest();
 
+
+	Http.open('POST', url);
+	sendButton.addEventListener('click', ()=> {
+		Http.send();
+		Http.onreadystatechange = (e) => {
+			console.log(Http.responseText);
+		};
+	}); */
+	
 	sendButton.addEventListener('click', () => {
-	  fetch('http://172.27.192.1:9090/notifications/my-send-data/3', {
+	  fetch(url, {
 	    method: 'POST',
 	    headers: {
-	      'Content-Type': 'application/json'
+	      'Content-Type': 'application/x-www-form-urlencoded'
 	    },
-	    mode: 'cors', // CORS를 사용하여 요청 보내기
-	    body: JSON.stringify({ key: 'starrfnl' })
+	    body: JSON.stringify(data)
 	  })
 	    .then(response => console.log(response))
+
 	    .catch(error => {
 	      console.error('Error:', error);
 	    });
-	}); */
+	}); 
 	
-	const userId = 3;
-	const eventSource = new EventSource(`http://192.168.0.89:9090/notifications/sse-send-data/3`);
+	/* const userId = 3;
+	const eventSource = new EventSource(`http://172.27.205.135:8088/notifications/sse-send-data/100`);
 
 	eventSource.onmessage = (event) => {
 	  // SSE 메시지 수신 시 처리
@@ -55,7 +68,7 @@
 	eventSource.onclose = () => {
 	  // SSE 연결 종료 처리
 	  console.log('SSE Connection Closed');
-	};
+	}; */
 
 	</script>
 	

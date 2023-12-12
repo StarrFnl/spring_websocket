@@ -18,7 +18,7 @@
 	<a href="#" id="sse" title="sse">sse client</a>
 </body>
 <script>
-	const eventSource_2 = new EventSource('http://${user3.user_content}:9090/app/notifications/subscribe/100');
+	const eventSource_2 = new EventSource('http://${user3.user_content}:8088/app/notifications/subscribe/100');
 	/* const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/2');
 
 	eventSource.addEventListener('sse', event => {
