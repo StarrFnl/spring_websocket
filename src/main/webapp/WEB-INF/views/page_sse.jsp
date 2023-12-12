@@ -14,6 +14,7 @@
 	<h1>${user1 }</h1>
 	<h1>${user2 }</h1>
 	<h1>${user3 }</h1>
+	<h1>${owner }</h1>
 	<%-- <form method="post" action="http://${user1.user_content}:9090/app/notifications/subscribe/2">
 		<input type="text" name="content">
 		<input type="submit" id="send" value="send">
@@ -22,9 +23,9 @@
 	<script>
 	
 	const sendButton = document.getElementById('send');
-	var origin = "http://192.168.0.68:8080/app/";
-	const url = origin+'notifications/send-data/100';
-	const data = { name: 'mynameis kim' };
+	var origin = "${owner.owner_path}";
+	const url = origin+'/notifications/send-data/100';
+	const data = { name: '내이름은 하이' };
 	
 	/* const Http = new XMLHttpRequest();
 
@@ -41,11 +42,14 @@
 	  fetch(url, {
 	    method: 'POST',
 	    headers: {
-	      'Content-Type': 'application/x-www-form-urlencoded'
+	      'Content-Type': 'application/json',
+	      'charset':'utf-8'
 	    },
 	    body: JSON.stringify(data)
 	  })
-	    .then(response => console.log(response))
+	  //response 인자 확인. 다음 then에서 data로 전환됨
+	    .then(response => response.json())
+	    .then((data) => {console.log(data);})
 
 	    .catch(error => {
 	      console.error('Error:', error);

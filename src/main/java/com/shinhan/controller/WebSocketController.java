@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.shinhan.dto.OwnerVO;
+import com.shinhan.model.OwnerDAO;
 import com.shinhan.model.UserDAO;
 import com.shinhan.model.testDAO;
 
@@ -31,6 +33,9 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 	
 	@Autowired
 	UserDAO uDao;
+	
+	@Autowired
+	OwnerDAO oDao;
 	
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
@@ -56,10 +61,19 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 	}
 	
 	@GetMapping("/page_client.do")
-	public String pageClient(Model model) {
+	public String pageClient(Model model, Integer owner_id) {
 		model.addAttribute("user1",uDao.selectUserById(1));
 		model.addAttribute("user2",uDao.selectUserById(2));
 		model.addAttribute("user3",uDao.selectUserById(3));
+		
+		owner_id = 1; //원래는 가게 열 때 가져올 것
+		
+		OwnerVO owner = oDao.selectOwnerById(owner_id); //가게정보 표시
+		if(owner.getOwner_path() == null) {
+			System.out.println("현재 주문 받기 불가능한 가게");
+			return "redirect:/home";
+		}
+		model.addAttribute("owner", owner);
 		return "page_sse";
 	}
 	
