@@ -1,9 +1,15 @@
 package com.shinhan.model;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import com.mysql.cj.jdbc.Blob;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +30,7 @@ public class NotificationService {
     public SseEmitter subscribe(Long userId) {
         SseEmitter emitter = createEmitter(userId);
 
-        sendToClient(userId, "EventStream Created, 주문 받을 수 있습니다. [userId=" + userId + "]");
+        sendToClient(userId, "EventStream Created, 한글한글. [userId=" + userId + "]");
         return emitter;
     }
 
@@ -36,6 +42,7 @@ public class NotificationService {
      * @param event  - 전송할 이벤트 객체
      */
     public void notify(Long userId, Object event) {
+    	
         sendToClient(userId, event);
     }
 
@@ -44,15 +51,29 @@ public class NotificationService {
      *
      * @param id   - 데이터 받는 사용자 아이디
      * @param data - 전송할 데이터
+     * @throws UnsupportedEncodingException 
      */
-    private void sendToClient(Long id, Object data) {
+    private void sendToClient(Long id, Object data)  {
     	System.out.println("sendToClient:" + id + data);
         SseEmitter emitter = emitterRepository.get(id);
-        System.out.println(emitter);
+        
+        ByteBuffer buffer = StandardCharsets.UTF_8.encode((String)data);
+        
+        String encodedString = null;
+        try {
+        	encodedString = URLEncoder.encode(data.toString(), "UTF-8");
+        	encodedString = encodedString.replaceAll("\\+", "%20");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //System.out.println("버퍼변환 : "+StandardCharsets.UTF_8.decode(buffer));
+        
+        //System.out.println(emitter);
         if (emitter != null) {
             try {
                 emitter.send(SseEmitter.event().id(String.valueOf(id))
-                		.name("sse").data(data+"\n\n"));
+                		.name("sse").data(encodedString));//StandardCharsets.UTF_8.decode(buffer)+"\n\n"));
             } catch (IOException exception) {
                 emitterRepository.deleteById(id);
                 emitter.completeWithError(exception);

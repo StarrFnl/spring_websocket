@@ -19,7 +19,7 @@
 	
 	<a href="#" id="sse" title="sse">sse client</a>
 </body>
-<script>
+<script type="text/javascript" charset="utf-8">
 
 	var addr = window.location.origin+"/app/";
 	console.log(addr);
@@ -32,11 +32,48 @@
     	console.log(event.data);
     	console.log(event.data.name);
 	}); */
-		
+	
+	//이벤트 자동으로 n초마다 반복되는 설정 확인
 	eventSource_2.addEventListener('sse', event => {
-    	console.log(event, "eSource1, ${user1 }");
-    	console.log(event.data);
-    	console.log(event.data.name);
+		console.log(event);
+		console.log(event.data);
+		const decodedString = decodeURIComponent(event.data);
+		console.log(decodedString);
+		//let base64Str = event.data;
+		//let utf8Str = decodeURIComponent(escape(atob(event.data)));
+
+    	console.log(decodedString);
+    	console.log("한글");
+    	helloWorld(decodeURIComponent(decodedString));
 	});
+	
+	function helloWorld(str){
+        let date = new Date().toLocaleString();
+        let notification;
+        let notificationPermission = Notification.permission;
+        if (notificationPermission === "granted") {
+            //Notification을 이미 허용한 사람들에게 보여주는 알람창
+            //맨 위 제목
+            notification = new Notification(`빵이오 주문!`, {
+                body: `알림 내용:`+decodeURIComponent(str),
+                //icon: 'hello.png',
+            });
+        } else if (notificationPermission !== 'denied') {
+            //Notification을 거부했을 경우 재 허용 창 띄우기
+            Notification.requestPermission(function (permission) {
+                if (permission === "granted") {
+                    notification = new Notification(`빵이오 주문 접수 시작!`, {
+                        body: `첫방문일시: ${date}`,
+                        //icon: 'hello.png',
+                    });
+                }else {
+                    alert("알람 허용이 거부되었습니다.")
+                }
+            });
+        }
+    }
+
+    
+
 </script>
 </html>

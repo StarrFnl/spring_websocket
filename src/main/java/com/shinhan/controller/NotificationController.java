@@ -1,6 +1,11 @@
 package com.shinhan.controller;
 
  
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import com.shinhan.dto.OwnerVO;
 import com.shinhan.dto.testVO;
 import com.shinhan.model.NotificationService;
 import com.shinhan.model.OwnerDAO;
@@ -40,7 +46,7 @@ public class NotificationController {
 	//구독 연결만
 	@CrossOrigin
     @GetMapping(value = "/subscribe/{id}", 
-    		produces = "text/event-stream" )//MediaType.TEXT_EVENT_STREAM_VALUE)
+    		produces = "text/event-stream;charset=utf-8" )//MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter subscribe(@PathVariable Long id, testVO test) {
     	SseEmitter sseObj = notificationService.subscribe(id);
     	System.out.println(test.toString());
@@ -50,12 +56,20 @@ public class NotificationController {
     
     //연결된 곳에 공지 보내기
     @CrossOrigin
+    @ResponseBody
     @PostMapping("/send-data/{id}")
-    public void sendData(@PathVariable Long id, @RequestBody String body) {
-        System.out.println(body);
+    public Map<String, Object> sendData(@PathVariable Long id, @RequestBody Map<String, Object> reqMap, HttpServletResponse response) {
+        Map<String, Object> temp = new HashMap<String, Object>();
         
+        System.out.println("요청 이름: "+reqMap.get("name"));
         int owner_id = 1;
-    	notificationService.notify(id, oDao.selectOwnerById(owner_id).getOwner_content());
+        OwnerVO owner = oDao.selectOwnerById(owner_id);
+        response.setCharacterEncoding("UTF-8");
+    	notificationService.notify(id, reqMap.get("name"));
+    	
+    	Map<String, Object> map = new HashMap<String, Object>();
+    	map.put("owner_content", owner.getOwner_content());
+    	return map;
     }
     
     
