@@ -11,4 +11,15 @@
 		select * from user
 		where user_id = #{aa}
 	</select>
+	
+	<select id="selectOwnerById" resultType="ownervo" parameterType="int">
+		select * from owner
+		where owner_id = #{aa}
+	</select>
+	
+	<update id="updateOwnerPathById" parameterType="map">
+		update owner
+		set owner_path = #{owner_path}
+		where owner_id = #{owner_id} 
+	</update>
 </mapper>

@@ -14,11 +14,17 @@
 	<h1>${user1 }</h1>
 	<h1>${user2 }</h1>
 	<h1>${user3 }</h1>
+	<h1>${owner }</h1>
+	
 	
 	<a href="#" id="sse" title="sse">sse client</a>
 </body>
 <script>
-	const eventSource_2 = new EventSource('http://${user3.user_content}:8088/app/notifications/subscribe/100');
+
+	var addr = window.location.origin+"/app/";
+	console.log(addr);
+	//현 컴퓨터 ip로 서버 열기. 해당 내용 db에 업로드 필요
+	const eventSource_2 = new EventSource('${owner.owner_path}/notifications/subscribe/100');
 	/* const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/2');
 
 	eventSource.addEventListener('sse', event => {
@@ -28,7 +34,7 @@
 	}); */
 		
 	eventSource_2.addEventListener('sse', event => {
-    	console.log(event, "eSource1, ${user3 }");
+    	console.log(event, "eSource1, ${user1 }");
     	console.log(event.data);
     	console.log(event.data.name);
 	});
