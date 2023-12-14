@@ -25,7 +25,7 @@
 	const sendButton = document.getElementById('send');
 	var origin = "${owner.owner_path}";
 	const url = origin+'/notifications/send-data/100';
-	const data = { name: '내이름은 하이' };
+	const data = { name: '내이름은 현성' };
 	
 	/* const Http = new XMLHttpRequest();
 
