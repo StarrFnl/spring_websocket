@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.shinhan.dto.OwnerVO;
 import com.shinhan.model.OwnerDAO;
 import com.shinhan.model.UserDAO;
-import com.shinhan.model.testDAO;
 
 //import com.shinhan.model.testDAO;
 
@@ -33,8 +32,6 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@Autowired
-	testDAO test;
 	
 	@Autowired
 	UserDAO uDao;
@@ -53,23 +50,23 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		model.addAttribute("test", test.selectAll());
 		return "home";
 	}
 	
+	//가게 페이지
 	@GetMapping("/page.do")
 	public String pageDisplay(Model model, HttpServletRequest request ) throws UnknownHostException {
 		//단순 db 확인
 		model.addAttribute("user1",uDao.selectUserById(1));
-		model.addAttribute("user2",uDao.selectUserById(2));
-		model.addAttribute("user3",uDao.selectUserById(3));
 		
+		//IP 추출
 		InetAddress ipAddress = InetAddress.getLocalHost();
 		String protocol = request.isSecure()?"https://":"http://";
 		String nowPath = protocol+ipAddress.getHostAddress()+":"+request.getServerPort()+request.getContextPath();
 		int owner_id = 1;
 		OwnerVO owner = oDao.selectOwnerById(owner_id);
 		
+		//Owner path update
 		if(owner.getOwner_path() == null || !owner.getOwner_path().equals(nowPath)) {
 			oDao.updateOwnerPathById(owner_id, nowPath);
 			owner.setOwner_path(nowPath);
@@ -78,6 +75,7 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 		return "page";
 	}
 	
+	//유저 페이지
 	@GetMapping("/page_client.do")
 	public String pageClient(Model model) {
 		model.addAttribute("user1",uDao.selectUserById(1));
@@ -86,8 +84,4 @@ private static final Logger logger = LoggerFactory.getLogger(WebSocketController
 		return "page_sse";
 	}
 	
-	@RequestMapping(value = "/echo.do", method = RequestMethod.GET)
-	public String chat() {
-		return "echo";
-	}
 }

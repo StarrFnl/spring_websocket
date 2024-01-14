@@ -25,13 +25,7 @@
 	console.log(addr);
 	//현 컴퓨터 ip로 서버 열기. 해당 내용 db에 업로드 필요
 	const eventSource_2 = new EventSource('${owner.owner_path}/notifications/subscribe/100');
-	/* const eventSource = new EventSource('http://localhost:9090/app/notifications/subscribe/2');
 
-	eventSource.addEventListener('sse', event => {
-    	console.log(event);
-    	console.log(event.data);
-    	console.log(event.data.name);
-	}); */
 	
 	//이벤트 자동으로 n초마다 반복되는 설정 확인
 	eventSource_2.addEventListener('sse', event => {

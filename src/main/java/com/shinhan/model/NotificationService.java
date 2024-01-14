@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class NotificationService {
 	// 기본 타임아웃
-    private static final Long DEFAULT_TIMEOUT = 60L * 1000 ; //* 60 60�� 
+    private static final Long DEFAULT_TIMEOUT = 60 * 60L * 1000 ; //* 60 60�� 
 
     private final EmitterRepository emitterRepository;
 

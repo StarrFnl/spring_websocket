@@ -18,7 +18,6 @@
 	</settings>
 	<typeAliases>
 		<!-- 타입을 사용 시 간단히 쓰려고 별명 설정 -->
-		<typeAlias type="com.shinhan.dto.testVO" alias="testvo" />
 		<typeAlias type="com.shinhan.dto.UserVO" alias="uservo" />
 		<typeAlias type="com.shinhan.dto.OwnerVO" alias="ownervo" />
 		

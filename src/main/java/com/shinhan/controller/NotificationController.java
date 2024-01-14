@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import com.shinhan.dto.OwnerVO;
-import com.shinhan.dto.testVO;
 import com.shinhan.model.NotificationService;
 import com.shinhan.model.OwnerDAO;
 
@@ -45,11 +44,9 @@ public class NotificationController {
 	
 	//구독 연결만
 	@CrossOrigin
-    @GetMapping(value = "/subscribe/{id}", 
-    		produces = "text/event-stream;charset=utf-8" )//MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter subscribe(@PathVariable Long id, testVO test) {
+	@GetMapping(value="/subscribe/{id}", produces="text/event-stream;charset=utf-8")
+	public SseEmitter subscribe(@PathVariable Long id)  {
     	SseEmitter sseObj = notificationService.subscribe(id);
-    	System.out.println(test.toString());
     	System.out.println(sseObj);
         return sseObj;
     }
@@ -72,10 +69,4 @@ public class NotificationController {
     	return map;
     }
     
-    
-    //연결된 곳에 공지 보내기
-    @PostMapping("/my-send-data/{id}")
-    public void mysendData(@PathVariable Long id) {
-        notificationService.notify(id, "test");
-    }
 }
